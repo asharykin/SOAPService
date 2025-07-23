@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 @Service
 @RequiredArgsConstructor
 public class ValidationService {
-
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 

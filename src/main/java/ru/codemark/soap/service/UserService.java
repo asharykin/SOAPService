@@ -1,6 +1,6 @@
 package ru.codemark.soap.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.codemark.soap.dto.*;
@@ -12,18 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
+    private final UserRepository userRepository;
+    private final ValidationService validationService;
+    private final UserMapper userMapper;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ValidationService validationService;
-
-    @Autowired
-    private UserMapper userMapper;
-
-    private <T extends BaseResponse> boolean handleValidationErrors(List<String> errors, T responseDto) {
+    private <T extends BaseResponse> boolean handleValidationErrors(T responseDto, List<String> errors) {
         if (!errors.isEmpty()) {
             responseDto.setSuccess(false);
             ErrorList errorList = new ErrorList();
@@ -55,7 +50,7 @@ public class UserService {
         List<String> errors = new ArrayList<>();
         validationService.checkUserExists(requestDto.getUsername(), errors);
 
-        if (handleValidationErrors(errors, responseDto)) {
+        if (handleValidationErrors(responseDto, errors)) {
             return responseDto;
         }
 
@@ -75,7 +70,7 @@ public class UserService {
         List<String> errors = new ArrayList<>();
         validationService.validateUserCreation(userCreation, errors);
 
-        if (handleValidationErrors(errors, responseDto)) {
+        if (handleValidationErrors(responseDto, errors)) {
             return responseDto;
         }
 
@@ -94,7 +89,7 @@ public class UserService {
         List<String> errors = new ArrayList<>();
         validationService.validateUserUpdate(userUpdate, errors);
 
-        if (handleValidationErrors(errors, responseDto)) {
+        if (handleValidationErrors(responseDto, errors)) {
             return responseDto;
         }
 
@@ -113,7 +108,7 @@ public class UserService {
         List<String> errors = new ArrayList<>();
         validationService.checkUserExists(requestDto.getUsername(), errors);
 
-        if (handleValidationErrors(errors, responseDto)) {
+        if (handleValidationErrors(responseDto, errors)) {
             return responseDto;
         }
 
