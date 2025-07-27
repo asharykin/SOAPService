@@ -29,8 +29,6 @@ public class ValidationService {
     }
 
     public void validateUserUpdate(UserUpdate userUpdate, List<String> errors) {
-        checkUserExists(userUpdate.getUsername(), errors);
-
         if (userUpdate.getName() != null) {
             checkNameNotEmpty(userUpdate.getName(), errors);
         }
@@ -39,6 +37,10 @@ public class ValidationService {
         }
         if (userUpdate.getRoles() != null) {
             checkRolesExist(userUpdate.getRoles().getRole(), errors);
+        }
+
+        if (errors.isEmpty()) {
+            checkUserExists(userUpdate.getUsername(), errors);
         }
     }
 
@@ -78,7 +80,6 @@ public class ValidationService {
     }
 
     public void checkUserExists(String username, List<String> errors) {
-        checkUsernameNotEmpty(username, errors);
         if (errors.isEmpty() && userRepository.findByUsername(username).isEmpty()) {
             errors.add("User with username '" + username + "' does not exist.");
         }
