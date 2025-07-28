@@ -80,7 +80,7 @@ public class ValidationService {
     }
 
     public void checkUserExists(String username, List<String> errors) {
-        if (errors.isEmpty() && userRepository.findByUsername(username).isEmpty()) {
+        if (userRepository.findByUsername(username).isEmpty()) {
             errors.add("User with username '" + username + "' does not exist.");
         }
     }
