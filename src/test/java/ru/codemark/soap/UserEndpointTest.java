@@ -23,19 +23,19 @@ public class UserEndpointTest {
 
     private static final String NAMESPACE_URI = "http://codemark.ru/soap/dto";
 
-    @Autowired
-    private MockWebServiceClient mockClient;
-
     @MockBean
     private UserService userService;
+
+    @Autowired
+    private MockWebServiceClient mockClient;
 
     @Test
     void testGetUserSuccess() throws IOException {
         String testUsername = "ivan_admin";
         String testName = "Ivan Ivanov";
 
-        GetUserResponse mockUserServiceResponse = new GetUserResponse();
-        mockUserServiceResponse.setSuccess(true);
+        GetUserResponse mockResponse = new GetUserResponse();
+        mockResponse.setSuccess(true);
 
         UserInfo userInfo = new UserInfo();
         userInfo.setName(testName);
@@ -45,27 +45,27 @@ public class UserEndpointTest {
         roleList.getRole().addAll(Arrays.asList("admin", "operator"));
         userInfo.setRoles(roleList);
 
-        mockUserServiceResponse.setUser(userInfo);
+        mockResponse.setUser(userInfo);
 
-        when(userService.getUser(any(GetUserRequest.class))).thenReturn(mockUserServiceResponse);
+        when(userService.getUser(any(GetUserRequest.class))).thenReturn(mockResponse);
 
         String requestXml =
                 "<dto:getUserRequest xmlns:dto=\"" + NAMESPACE_URI + "\">" +
-                        "   <dto:username>" + testUsername + "</dto:username>" +
-                        "</dto:getUserRequest>";
+                "   <dto:username>" + testUsername + "</dto:username>" +
+                "</dto:getUserRequest>";
 
         String expectedResponseXml =
                 "<ns2:getUserResponse xmlns:ns2=\"" + NAMESPACE_URI + "\">" +
-                        "   <ns2:success>true</ns2:success>" +
-                        "   <ns2:user>" +
-                        "      <ns2:username>" + testUsername + "</ns2:username>" +
-                        "      <ns2:name>" + testName + "</ns2:name>" +
-                        "      <ns2:roles>" +
-                        "         <ns2:role>admin</ns2:role>" +
-                        "         <ns2:role>operator</ns2:role>" +
-                        "      </ns2:roles>" +
-                        "   </ns2:user>" +
-                        "</ns2:getUserResponse>";
+                "   <ns2:success>true</ns2:success>" +
+                "   <ns2:user>" +
+                "      <ns2:username>" + testUsername + "</ns2:username>" +
+                "      <ns2:name>" + testName + "</ns2:name>" +
+                "      <ns2:roles>" +
+                "         <ns2:role>admin</ns2:role>" +
+                "         <ns2:role>operator</ns2:role>" +
+                "      </ns2:roles>" +
+                "   </ns2:user>" +
+                "</ns2:getUserResponse>";
 
         mockClient
                 .sendRequest(withPayload(new StringSource(requestXml)))
