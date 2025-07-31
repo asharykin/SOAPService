@@ -81,27 +81,27 @@ public class UserEndpointTest {
     void testGetUserNotFound() throws IOException {
         String testUsername = "non_existent_user";
 
-        GetUserResponse mockUserServiceResponse = new GetUserResponse();
-        mockUserServiceResponse.setSuccess(false);
+        GetUserResponse mockResponse = new GetUserResponse();
+        mockResponse.setSuccess(false);
 
         ErrorList errorList = new ErrorList();
         errorList.getError().add("User with username '" + testUsername + "' does not exist.");
-        mockUserServiceResponse.setErrors(errorList);
+        mockResponse.setErrors(errorList);
 
-        when(userService.getUser(any(GetUserRequest.class))).thenReturn(mockUserServiceResponse);
+        when(userService.getUser(any(GetUserRequest.class))).thenReturn(mockResponse);
 
         String requestXml =
                 "<dto:getUserRequest xmlns:dto=\"" + NAMESPACE_URI + "\">" +
-                        "   <dto:username>" + testUsername + "</dto:username>" +
-                        "</dto:getUserRequest>";
+                "   <dto:username>" + testUsername + "</dto:username>" +
+                "</dto:getUserRequest>";
 
         String expectedResponseXml =
                 "<ns2:getUserResponse xmlns:ns2=\"" + NAMESPACE_URI + "\">" +
-                        "   <ns2:success>false</ns2:success>" +
-                        "   <ns2:errors>" +
-                        "      <ns2:error>User with username '" + testUsername + "' does not exist.</ns2:error>" +
-                        "   </ns2:errors>" +
-                        "</ns2:getUserResponse>";
+                "   <ns2:success>false</ns2:success>" +
+                "   <ns2:errors>" +
+                "      <ns2:error>User with username '" + testUsername + "' does not exist.</ns2:error>" +
+                "   </ns2:errors>" +
+                "</ns2:getUserResponse>";
 
         mockClient
                 .sendRequest(withPayload(new StringSource(requestXml)))
