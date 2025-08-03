@@ -9,8 +9,9 @@ CREATE TABLE roles (
 
 CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR NOT NULL UNIQUE,
-    name VARCHAR NOT NULL,
+    user_name VARCHAR NOT NULL UNIQUE,
+    first_name VARCHAR NOT NULL,
+    last_name VARCHAR NOT NULL,
     password VARCHAR NOT NULL
 );
 
