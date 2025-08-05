@@ -48,13 +48,13 @@ public class UserService {
         GetUserResponse responseDto = new GetUserResponse();
 
         List<String> errors = new ArrayList<>();
-        validationService.checkUserExists(requestDto.getUsername(), errors);
+        validationService.checkUserExists(requestDto.getUserName(), errors);
 
         if (handleValidationErrors(responseDto, errors)) {
             return responseDto;
         }
 
-        User user = userRepository.findByUsername(requestDto.getUsername()).get();
+        User user = userRepository.findByUserName(requestDto.getUserName()).get();
 
         UserInfo userInfo = userMapper.userToUserInfo(user, true);
         responseDto.setUser(userInfo);
@@ -93,7 +93,7 @@ public class UserService {
             return responseDto;
         }
 
-        User existingUser = userRepository.findByUsername(userUpdate.getUsername()).get();
+        User existingUser = userRepository.findByUserName(userUpdate.getUserName()).get();
         userMapper.mergeUserUpdateToUser(userUpdate, existingUser);
         userRepository.save(existingUser);
 
@@ -106,13 +106,13 @@ public class UserService {
         DeleteUserResponse responseDto = new DeleteUserResponse();
 
         List<String> errors = new ArrayList<>();
-        validationService.checkUserExists(requestDto.getUsername(), errors);
+        validationService.checkUserExists(requestDto.getUserName(), errors);
 
         if (handleValidationErrors(responseDto, errors)) {
             return responseDto;
         }
 
-        User userToDelete = userRepository.findByUsername(requestDto.getUsername()).get();
+        User userToDelete = userRepository.findByUserName(requestDto.getUserName()).get();
         userRepository.delete(userToDelete);
 
         responseDto.setSuccess(true);

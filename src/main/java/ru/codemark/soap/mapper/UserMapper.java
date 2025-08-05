@@ -17,8 +17,9 @@ public class UserMapper {
 
     public UserInfo userToUserInfo(User user, boolean withRoles) {
         UserInfo userInfo = new UserInfo();
-        userInfo.setName(user.getName());
-        userInfo.setUsername(user.getUsername());
+        userInfo.setUserName(user.getUserName());
+        userInfo.setFirstName(user.getFirstName());
+        userInfo.setLastName(user.getLastName());
 
         if (withRoles) {
             RoleList roleList = new RoleList();
@@ -33,8 +34,9 @@ public class UserMapper {
 
     public User userCreationToUser(UserCreation userCreation) {
         User user = new User();
-        user.setName(userCreation.getName());
-        user.setUsername(userCreation.getUsername());
+        user.setUserName(userCreation.getUserName());
+        user.setFirstName(userCreation.getFirstName());
+        user.setLastName(userCreation.getLastName());
         user.setPassword(userCreation.getPassword());
 
         for (String roleName : userCreation.getRoles().getRole()) {
@@ -45,8 +47,11 @@ public class UserMapper {
     }
 
     public void mergeUserUpdateToUser(UserUpdate userUpdate, User existingUser) {
-        if (userUpdate.getName() != null) {
-            existingUser.setName(userUpdate.getName());
+        if (userUpdate.getFirstName() != null) {
+            existingUser.setFirstName(userUpdate.getFirstName());
+        }
+        if (userUpdate.getLastName() != null) {
+            existingUser.setLastName(userUpdate.getLastName());
         }
         if (userUpdate.getPassword() != null) {
             existingUser.setPassword(userUpdate.getPassword());

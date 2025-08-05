@@ -18,19 +18,23 @@ public class ValidationService {
     private final RoleRepository roleRepository;
 
     public void validateUserCreation(UserCreation userCreation, List<String> errors) {
-        checkUsernameNotEmpty(userCreation.getUsername(), errors);
-        checkNameNotEmpty(userCreation.getName(), errors);
+        checkUserNameNotEmpty(userCreation.getUserName(), errors);
+        checkFirstNameNotEmpty(userCreation.getFirstName(), errors);
+        checkLastNameNotEmpty(userCreation.getLastName(), errors);
         checkPassword(userCreation.getPassword(), errors);
 
         if (errors.isEmpty()) {
-            checkUserDoesNotExist(userCreation.getUsername(), errors);
+            checkUserDoesNotExist(userCreation.getUserName(), errors);
             checkRolesExist(userCreation.getRoles().getRole(), errors);
         }
     }
 
     public void validateUserUpdate(UserUpdate userUpdate, List<String> errors) {
-        if (userUpdate.getName() != null) {
-            checkNameNotEmpty(userUpdate.getName(), errors);
+        if (userUpdate.getFirstName() != null) {
+            checkFirstNameNotEmpty(userUpdate.getFirstName(), errors);
+        }
+        if (userUpdate.getLastName() != null) {
+            checkLastNameNotEmpty(userUpdate.getLastName(), errors);
         }
         if (userUpdate.getPassword() != null) {
             checkPassword(userUpdate.getPassword(), errors);
@@ -40,19 +44,25 @@ public class ValidationService {
         }
 
         if (errors.isEmpty()) {
-            checkUserExists(userUpdate.getUsername(), errors);
+            checkUserExists(userUpdate.getUserName(), errors);
         }
     }
 
-    public void checkUsernameNotEmpty(String username, List<String> errors) {
-        if (username == null || username.trim().isEmpty()) {
-            errors.add("Username cannot be empty.");
+    public void checkUserNameNotEmpty(String userName, List<String> errors) {
+        if (userName == null || userName.trim().isEmpty()) {
+            errors.add("User name cannot be empty.");
         }
     }
 
-    public void checkNameNotEmpty(String name, List<String> errors) {
-        if (name == null || name.trim().isEmpty()) {
-            errors.add("Name cannot be empty.");
+    public void checkFirstNameNotEmpty(String firstName, List<String> errors) {
+        if (firstName == null || firstName.trim().isEmpty()) {
+            errors.add("First name cannot be empty.");
+        }
+    }
+
+    public void checkLastNameNotEmpty(String lastName, List<String> errors) {
+        if (lastName == null || lastName.trim().isEmpty()) {
+            errors.add("Last name cannot be empty.");
         }
     }
 
@@ -79,15 +89,15 @@ public class ValidationService {
         }
     }
 
-    public void checkUserExists(String username, List<String> errors) {
-        if (userRepository.findByUsername(username).isEmpty()) {
-            errors.add("User with username '" + username + "' does not exist.");
+    public void checkUserExists(String userName, List<String> errors) {
+        if (userRepository.findByUserName(userName).isEmpty()) {
+            errors.add("User with user name '" + userName + "' does not exist.");
         }
     }
 
-    public void checkUserDoesNotExist(String username, List<String> errors) {
-        if (userRepository.findByUsername(username).isPresent()) {
-            errors.add("User with username '" + username + "' already exists.");
+    public void checkUserDoesNotExist(String userName, List<String> errors) {
+        if (userRepository.findByUserName(userName).isPresent()) {
+            errors.add("User with user name '" + userName + "' already exists.");
         }
     }
 
