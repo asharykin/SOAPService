@@ -46,7 +46,7 @@ curl -X POST http://localhost:8080/ws \
      <soapenv:Header/>
      <soapenv:Body>
         <dto:getUserRequest>
-          <dto:username>ivan_admin</dto:username>
+          <dto:userName>ivan_admin</dto:userName>
         </dto:getUserRequest>
      </soapenv:Body>
      </soapenv:Envelope>'
@@ -63,8 +63,9 @@ curl -X POST http://localhost:8080/ws \
      <soapenv:Body>
         <dto:createUserRequest>
           <dto:user>
-            <dto:username>gost_guest</dto:username>
-            <dto:name>Gost Gostev</dto:name>
+            <dto:userName>gost_guest</dto:userName>
+            <dto:firstName>Gost</dto:firstName>
+            <dto:lastName>Gostev</dto:lastName>
             <dto:password>GuestPass123</dto:password>
             <dto:roles>
               <dto:role>guest</dto:role>

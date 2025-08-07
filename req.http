@@ -1,0 +1,79 @@
+POST localhost:8080/ws HTTP/1.1
+Content-Type: text/xml
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:dto="http://codemark.ru/soap/dto">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dto:getAllUsersRequest/>
+   </soapenv:Body>
+</soapenv:Envelope>
+###
+POST localhost:8080/ws HTTP/1.1
+Content-Type: text/xml
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:dto="http://codemark.ru/soap/dto">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <dto:getUserRequest>
+            <dto:userName>ivan_admin</dto:userName>
+        </dto:getUserRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
+###
+POST localhost:8080/ws HTTP/1.1
+Content-Type: text/xml
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:dto="http://codemark.ru/soap/dto">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <dto:createUserRequest>
+            <dto:user>
+                <dto:userName>gost_guest</dto:userName>
+                <dto:firstName>Gost</dto:firstName>
+                <dto:lastName>Gostev</dto:lastName>
+                <dto:password>GuestPass123</dto:password>
+                <dto:roles>
+                    <dto:role>guest</dto:role>
+                </dto:roles>
+            </dto:user>
+        </dto:createUserRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
+###
+POST localhost:8080/ws HTTP/1.1
+Content-Type: text/xml
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:dto="http://codemark.ru/soap/dto">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <dto:updateUserRequest>
+            <dto:user>
+                <dto:userName>ivan_admin</dto:userName>
+                <dto:firstName>Ivan</dto:firstName>
+                <dto:lastName>Petrov</dto:lastName>
+                <dto:password>NewAdminPass123</dto:password>
+                <dto:roles>
+                    <dto:role>admin</dto:role>
+                    <dto:role>analyst</dto:role>
+                </dto:roles>
+            </dto:user>
+        </dto:updateUserRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
+###
+POST localhost:8080/ws HTTP/1.1
+Content-Type: text/xml
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:dto="http://codemark.ru/soap/dto">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <dto:deleteUserRequest>
+         <dto:userName>maria_operator</dto:userName>
+      </dto:deleteUserRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
